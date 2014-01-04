@@ -3,17 +3,30 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.0.1
+Version: 1.0.2
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define('ZipAddr_VERSION', '1.0.1');
+define( 'zipaddr_VERSION', '1.0.2');
+define( 'zipaddr_PATH', dirname( __FILE__ ) );
+define( 'zipaddr_FILE1',zipaddr_PATH."/zipaddr_define.txt" );
+
+if( is_admin() )
+	require_once zipaddr_PATH.'/admin.php';
+
 
 function zipaddr_jp_change($output){
 	if( strstr($output,'zip') == false ) {return $output;}
-$pn = explode('/', plugin_basename(__FILE__));
-$plugin_name = $pn[0];
-$ac = '1';
+
+$ac = '1';  // 1:無償,2:有償
+$kt = '5';  // 5-7:ガイダンス表示桁数
+$fname= zipaddr_FILE1;
+if( file_exists($fname) ) { // ファイルの確認
+	$data= trim( file_get_contents($fname) );
+	$prm= explode(",", $data);
+	if( count($prm) >= 2 ) {$ac=$prm[0]; $kt=$prm[1];}
+}
+if( $kt < "5" || "7" < $kt ) $kt= "5";
 $ul = 'http://zipaddr.com/js/zipaddr7.js';
 $u2 ='http://zipaddr2.com/js/zipaddr3.js';
 $uls= 'https://zipaddr-com.ssl-xserver.jp/js/zipaddr7.js';
@@ -25,9 +38,9 @@ else if( $ac == "2" )                $uls= $u2;
 else if( $ssl == "1" ) $uls= $uls;
 else                   $uls= $ul;
 $js = '<script src="'. $uls .'" charset="UTF-8"></script>';
+$js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_own(){ZP.min='.$kt.';}</script>';
 $ky = '<form';
 	return str_ireplace($ky, $js.$ky, $output);
 }
-
 add_filter( 'the_content', 'zipaddr_jp_change', 99999);
 ?>

@@ -16,7 +16,7 @@ It works only in Japanese.
 Firstly zipaddr has two sites of zipaddr.com and zipaddr2.com in a service provider.
 In zipaddr.com, free site, the other are pay sites.
 
-This plug in only generates javascript sentence to cooperate with wordpress between zipaddr.
+This plugin only generates javascript sentence to cooperate with wordpress between zipaddr.
 Therefore load does one following javascript.
 http://zipaddr.com/js/zipaddr7.js or http://zipaddr2.com/js/zipaddr3.js
 SSL:(https://zipaddr-com.ssl-xserver.jp/js/zipaddr7.js or https://zipaddr2-com.ssl-xserver.jp/js/zipaddr3.js)
@@ -42,12 +42,15 @@ It do the following movement.
 
 == Changelog ==
 
-
-
-== Upgrade notice ==
+= 1.0.2 =
+It added a setting function of the operation environment.
 
 = 1.0.1 =
 It register an initial version.
+
+== Upgrade notice ==
+
+
 
 == Arbitrary section 1 ==
 
