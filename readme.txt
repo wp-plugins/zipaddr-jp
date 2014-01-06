@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.0.4 =
+We enlarged target coverage.
+
 = 1.0.3 =
 We changed the storage place of the configuration file.
 

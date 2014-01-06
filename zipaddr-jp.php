@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.0.3
+Version: 1.0.4
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERSION', '1.0.3');
+define( 'zipaddr_VERSION', '1.0.4');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -15,7 +15,7 @@ if( is_admin() )
 	require_once zipaddr_PATH.'/admin.php';
 
 
-function zipaddr_jp_change($output){
+function zipaddr_jp_change($output, $opt=""){
 	if( strstr($output,'zip') == false ) {return $output;}
 
 $ac = '1';  // 1:ñ≥èû,2:óLèû
@@ -40,7 +40,14 @@ else                   $uls= $ul;
 $js = '<script src="'. $uls .'" charset="UTF-8"></script>';
 $js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_own(){ZP.min='.$kt.';}</script>';
 $ky = '<form';
-	return str_ireplace($ky, $js.$ky, $output);
+	$ans= empty($opt) ? str_ireplace($ky, $js.$ky, $output) : $output.$js;
+	return $ans;
 }
 add_filter( 'the_content', 'zipaddr_jp_change', 99999);
+
+
+function zipaddr_jp_usces($formtag, $type, $data){
+	return zipaddr_jp_change($formtag, "1");
+}
+add_filter( 'usces_filter_apply_addressform', 'zipaddr_jp_usces', 99999, 3);
 ?>
