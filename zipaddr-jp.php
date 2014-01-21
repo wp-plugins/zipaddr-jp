@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.0.4
+Version: 1.0.5
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERSION', '1.0.4');
+define( 'zipaddr_VERSION', '1.0.5');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -29,15 +29,16 @@ if( file_exists($fname) ) { // ファイルの確認
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 $ul = 'http://zipaddr.com/js/zipaddr7.js';
 $u2 ='http://zipaddr2.com/js/zipaddr3.js';
-$uls= 'https://zipaddr-com.ssl-xserver.jp/js/zipaddr7.js';
-$u2s='https://zipaddr2-com.ssl-xserver.jp/js/zipaddr3.js';
+$uls= 'https://zipaddr-com.ssl-xserver.jp/js/zipaddr7.js?v='.zipaddr_VERSION;
+$u2s='https://zipaddr2-com.ssl-xserver.jp/js/zipaddr3.js?v='.zipaddr_VERSION;
 if( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) $ssl= "1";
 else $ssl= "";
+	$ssl= '1';
 	 if( $ac == "2" && $ssl == "1" ) $uls= $u2s;
 else if( $ac == "2" )                $uls= $u2;
 else if( $ssl == "1" ) $uls= $uls;
 else                   $uls= $ul;
-$js = '<script src="'. $uls .'" charset="UTF-8"></script>';
+$js = '<script type="text/javascript" src="'. $uls .'" charset="UTF-8"></script>';
 $js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_own(){ZP.min='.$kt.';}</script>';
 $ky = '<form';
 	$ans= empty($opt) ? str_ireplace($ky, $js.$ky, $output) : $output.$js;

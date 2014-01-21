@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.0.5 =
+We revised an SSL-related bug.
+
 = 1.0.4 =
 We enlarged target coverage.
 
