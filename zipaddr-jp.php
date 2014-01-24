@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.0.5
+Version: 1.0.6
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERSION', '1.0.5');
+define( 'zipaddr_VERSION', '1.0.6');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -18,13 +18,19 @@ if( is_admin() )
 function zipaddr_jp_change($output, $opt=""){
 	if( strstr($output,'zip') == false ) {return $output;}
 
-$ac = '1';  // 1:無償,2:有償
-$kt = '5';  // 5-7:ガイダンス表示桁数
+$ac = '1'; // 1:無償,2:有償
+$kt = '5'; // 5-7:ガイダンス表示桁数
+$ta = "";  // 縦
+$yo = "";  // 横
 $fname= zipaddr_FILE1;
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	if( count($prm) >= 2 ) {$ac=$prm[0]; $kt=$prm[1];}
+	while( count($prm) < 4 ) {$prm[]="";}
+	$ac= $prm[0];
+	$kt= $prm[1];
+	$ta= $prm[2];
+	$yo= $prm[3];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 $ul = 'http://zipaddr.com/js/zipaddr7.js';
@@ -34,12 +40,17 @@ $u2s='https://zipaddr2-com.ssl-xserver.jp/js/zipaddr3.js?v='.zipaddr_VERSION;
 if( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) $ssl= "1";
 else $ssl= "";
 	$ssl= '1';
+	$wp_version= get_bloginfo('version');
 	 if( $ac == "2" && $ssl == "1" ) $uls= $u2s;
 else if( $ac == "2" )                $uls= $u2;
 else if( $ssl == "1" ) $uls= $uls;
 else                   $uls= $ul;
 $js = '<script type="text/javascript" src="'. $uls .'" charset="UTF-8"></script>';
-$js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_own(){ZP.min='.$kt.';}</script>';
+$js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_ownb(){ZP.min='.$kt.';';
+$js.= 'ZP.uver="'.$wp_version.'";';
+if( !empty($ta) ) $js.= 'ZP.top='. $ta.';';
+if( !empty($yo) ) $js.= 'ZP.left='.$yo.';';
+$js.= '}</script>';
 $ky = '<form';
 	$ans= empty($opt) ? str_ireplace($ky, $js.$ky, $output) : $output.$js;
 	return $ans;

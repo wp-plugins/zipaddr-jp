@@ -16,9 +16,13 @@ function zipaddr_conf() {
 		if( isset($_POST['token']) && !empty($_POST['token']) ) {
 			$ac= isset($_POST['level'])? $_POST['level']: "";
 			$kt= isset($_POST['keta']) ? $_POST['keta'] : "";
+			$ta= isset($_POST['tate']) ? $_POST['tate'] : "";
+			$yo= isset($_POST['yoko']) ? $_POST['yoko'] : "";
 			if( $ac < "1" || "2" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "5";
-			$prm= $ac.",".$kt;
+			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
+			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
+			$prm= $ac.",".$kt.",".$ta.",".$yo;
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
 		}
@@ -27,10 +31,16 @@ function zipaddr_conf() {
 		}
 $ac = '1';
 $kt = '5';
+$ta = "";
+$yo = "";
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	if( count($prm) >= 2 ) {$ac=$prm[0]; $kt=$prm[1];}
+	while( count($prm) < 4 ) {$prm[]="";}
+	$ac= $prm[0];
+	$kt= $prm[1];
+	$ta= $prm[2];
+	$yo= $prm[3];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 $act= array("1" => "商用版サイト（default）", "2" => "有償版サイト");
@@ -41,9 +51,9 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
 
 <h2><?php echo $mesg; ?>（zipaddr-jp）</h2>
 <form id="zipaddr-conf" method="post" action="">
-<table border="0" cellspacing="1" cellpadding="8" summary=" ">
+<table border="1" cellspacing="0" cellpadding="8" summary=" ">
     <tr>
-        <td colspan="2" width="90" bgcolor="#f3f3f3">▼郵番DBの稼働環境選択</td>
+        <td colspan="2" width="90" bgcolor="#f3f3f3">▼郵番DBの稼働環境選択（<span style="color: #ff0000;">※</span>：必須）</td>
     </tr>
     <tr >
         <td bgcolor="#f3f3f3">利用サイト<span style="color: #ff0000;">※</span></td>
@@ -53,17 +63,21 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
         <td bgcolor="#f3f3f3">ガイダンス画面の出力<span style="color: #ff0000;">※</span></td>
         <td><?php echo $ktr; ?></td>
     </tr>
-    <tr >
-        <td colspan="2">
-※郵便番号DBの稼働場所は、次の2系統があります。<br />
-商用版サイト： http://zipaddr.com/ 系<br />
-有償版サイト： http://zipaddr2.com/ 系<br />
-<br />
-※有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
-※申請をしないと動きません。<br />
+    <tr>
+        <td bgcolor="#f3f3f3">ガイダンス位置の補正</td>
+        <td>
+縦：<input type="text" name="tate" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $ta; ?>" />　（default: 18）<br />
+横：<input type="text" name="yoko" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $yo; ?>" />　（default: 22）
         </td>
     </tr>
 </table>
+<br />
+▼郵便番号DBの稼働場所は、次の2系統があります。<br />
+　商用版サイト： http://zipaddr.com/ 系<br />
+　有償版サイト： http://zipaddr2.com/ 系<br />
+<br />
+▼有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
+　申請をしないと動きません。<br />
 <div class="btn-area">
 	<ul><li>
 		<input type="hidden" name="token" value="1"/>
@@ -97,10 +111,8 @@ function zipaddr_admin_menu() {
 function zipaddr_load_menu() {	
 	if ( class_exists( 'Jetpack' ) ) {
 		add_submenu_page( 'jetpack', __( 'zipaddr' ), __( 'zipaddr' ), 'manage_options', 'zipaddr-key-config', 'zipaddr_conf' );
-		add_submenu_page( 'jetpack', __( 'zipaddr Stats' ), __( 'zipaddr Stats' ), 'manage_options', 'zipaddr-stats-display', 'zipaddr_stats_display' );
 	} else {
 		add_submenu_page('plugins.php', __('zipaddr'), __('zipaddr'), 'manage_options', 'zipaddr-key-config', 'zipaddr_conf');
-		add_submenu_page('index.php', __('zipaddr Stats'), __('zipaddr Stats'), 'manage_options', 'zipaddr-stats-display', 'zipaddr_stats_display');
 	}
 }
 add_action( 'admin_menu', 'zipaddr_admin_menu' );

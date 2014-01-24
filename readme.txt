@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.0.6 =
+We added the indication point change function of the guidance screen.
+
 = 1.0.5 =
 We revised an SSL-related bug.
 
@@ -58,11 +61,3 @@ It added a setting function of the operation environment.
 It register an initial version.
 
 == Upgrade notice ==
-
-
-
-== Arbitrary section 1 ==
-
-
-
-== A brief Markdown Example ==
