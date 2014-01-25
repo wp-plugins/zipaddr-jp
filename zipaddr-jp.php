@@ -47,7 +47,7 @@ else if( $ssl == "1" ) $uls= $uls;
 else                   $uls= $ul;
 $js = '<script type="text/javascript" src="'. $uls .'" charset="UTF-8"></script>';
 $js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_ownb(){ZP.min='.$kt.';';
-$js.= 'ZP.uver="'.$wp_version.'";';
+$js.= 'ZP.uver=\''.$wp_version.'\';';
 if( !empty($ta) ) $js.= 'ZP.top='. $ta.';';
 if( !empty($yo) ) $js.= 'ZP.left='.$yo.';';
 $js.= '}</script>';
