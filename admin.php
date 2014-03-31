@@ -18,7 +18,7 @@ function zipaddr_conf() {
 			$kt= isset($_POST['keta']) ? $_POST['keta'] : "";
 			$ta= isset($_POST['tate']) ? $_POST['tate'] : "";
 			$yo= isset($_POST['yoko']) ? $_POST['yoko'] : "";
-			if( $ac < "1" || "2" < $ac ) $ac= "1";
+			if( $ac < "1" || "3" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "5";
 			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
@@ -43,7 +43,7 @@ if( file_exists($fname) ) { // ファイルの確認
 	$yo= $prm[3];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
-$act= array("1" => "商用版サイト（default）", "2" => "有償版サイト");
+$act= array("1" => "商用版サイト（default）","2" => "有償版サイト","3" => "御社サイト内で郵便番号簿管理");
 $ktt= array("5" => "5桁～（default）", "6" => "6桁～", "7" => "7桁～");
 $acr= zipaddr_radio("level",$ac, $act);
 $ktr= zipaddr_radio("keta", $kt, $ktt);
@@ -72,11 +72,13 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
     </tr>
 </table>
 <br />
-▼郵便番号DBの稼働場所は、次の2系統があります。<br />
+▼郵便番号DBの稼働場所は、次の3系統があります。<br />
 　商用版サイト： http://zipaddr.com/ 系<br />
 　有償版サイト： http://zipaddr2.com/ 系<br />
+　御社サイト版： http://zipaddr3.com/ 系<br />
 <br />
 ▼有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
+▼御社サイト版のご利用には別途、<a href="https://zipaddr3-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
 　申請をしないと動きません。<br />
 <div class="btn-area">
 	<ul><li>

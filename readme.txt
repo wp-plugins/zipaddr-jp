@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.7 =
+We added the mode which managed the zip code book in your company site.
+
 = 1.0.6 =
 We added the indication point change function of the guidance screen.
 
