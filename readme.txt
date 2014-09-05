@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.8 =
+We added the font-size change function of the guidance screen.
+
 = 1.7 =
 We added the mode which managed the zip code book in your company site.
 

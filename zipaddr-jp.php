@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.7
+Version: 1.8
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERS', '1.7');
+define( 'zipaddr_VERS', '1.8');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -21,17 +21,23 @@ $ac = '1'; // 1:無償,2:有償,3:御社
 $kt = '5'; // 5-7:ガイダンス表示桁数
 $ta = "";  // 縦
 $yo = "";  // 横
+$pf = "";  // pc-fsize
+$sf = "";  // sp-fsize
 $fname= zipaddr_FILE1;
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) < 4 ) {$prm[]="";}
+	while( count($prm) < 6 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
 	$yo= $prm[3];
+	$pf= $prm[4];
+	$sf= $prm[5];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
+if( $pf < 12  || 20  < $pf ) $pf= "12";
+if( $sf < 12  || 20  < $sf ) $sf= "20";
 if( isset($_SERVER['HTTPS']) ) {
 	$http= (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS']=='off' ) ?  'http' : 'https';
 }
@@ -63,6 +69,8 @@ $js = '<script type="text/javascript" src="'.$uls.'?v='.zipaddr_VERS.'" charset=
 $js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_ownb(){';
 if( !empty($ta) ) $js.= 'ZP.top='. $ta.';';
 if( !empty($yo) ) $js.= 'ZP.left='.$yo.';';
+if( !empty($pf) ) $js.= 'ZP.pfon='.$pf.';';
+if( !empty($sf) ) $js.= 'ZP.sfon='.$sf.';';
 $js.= 'ZP.min='.$kt.';ZP.uver=\''.$wp_version.'\';}</script>';
 if( $ac=="2" || $ac=="3" ) $js.= '<link rel="stylesheet" href="'.$lpath.'" />';
 $ky = '<form';

@@ -18,11 +18,15 @@ function zipaddr_conf() {
 			$kt= isset($_POST['keta']) ? $_POST['keta'] : "";
 			$ta= isset($_POST['tate']) ? $_POST['tate'] : "";
 			$yo= isset($_POST['yoko']) ? $_POST['yoko'] : "";
+			$pf= isset($_POST['pfon']) ? $_POST['pfon'] : "";
+			$sf= isset($_POST['sfon']) ? $_POST['sfon'] : "";
 			if( $ac < "1" || "3" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "5";
 			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
-			$prm= $ac.",".$kt.",".$ta.",".$yo;
+			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
+			if( !preg_match("/^[0-9\-]+$/",$sf) ) $sf="";
+			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf;
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
 		}
@@ -33,16 +37,22 @@ $ac = '1';
 $kt = '5';
 $ta = "";
 $yo = "";
+$pf = "";
+$sf = "";
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) < 4 ) {$prm[]="";}
+	while( count($prm) < 6 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
 	$yo= $prm[3];
+	$pf= $prm[4];
+	$sf= $prm[5];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
+if( $pf < 12  || 20  < $pf ) $pf= "12";
+if( $sf < 12  || 20  < $sf ) $sf= "20";
 $act= array("1" => "商用版サイト（default）","2" => "有償版サイト","3" => "御社サイト内で郵便番号簿管理");
 $ktt= array("5" => "5桁～（default）", "6" => "6桁～", "7" => "7桁～");
 $acr= zipaddr_radio("level",$ac, $act);
@@ -68,6 +78,13 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
         <td>
 縦：<input type="text" name="tate" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $ta; ?>" />　（default: 18）<br />
 横：<input type="text" name="yoko" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $yo; ?>" />　（default: 22）
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#f3f3f3">ガイダンス画面の文字サイズ</td>
+        <td>
+PC：<input type="text" name="pfon" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $pf; ?>" />　（default: 12）<br />
+SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $sf; ?>" />　（default: 20）
         </td>
     </tr>
 </table>
