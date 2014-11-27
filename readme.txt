@@ -42,6 +42,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.9 =
+We added the focus function after the zip code input.
+
 = 1.8 =
 We added the font-size change function of the guidance screen.
 

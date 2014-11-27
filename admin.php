@@ -20,13 +20,14 @@ function zipaddr_conf() {
 			$yo= isset($_POST['yoko']) ? $_POST['yoko'] : "";
 			$pf= isset($_POST['pfon']) ? $_POST['pfon'] : "";
 			$sf= isset($_POST['sfon']) ? $_POST['sfon'] : "";
+			$fo= isset($_POST['focs']) ? $_POST['focs'] : "";
 			if( $ac < "1" || "3" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "5";
 			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
 			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
 			if( !preg_match("/^[0-9\-]+$/",$sf) ) $sf="";
-			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf;
+			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo;
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
 		}
@@ -39,16 +40,18 @@ $ta = "";
 $yo = "";
 $pf = "";
 $sf = "";
+$fo = "";
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) < 6 ) {$prm[]="";}
+	while( count($prm) < 7 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
 	$yo= $prm[3];
 	$pf= $prm[4];
 	$sf= $prm[5];
+	$fo= $prm[6];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 if( $pf < 12  || 20  < $pf ) $pf= "12";
@@ -86,6 +89,10 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
 PC：<input type="text" name="pfon" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $pf; ?>" />　（default: 12）<br />
 SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disabled;" value="<?php echo $sf; ?>" />　（default: 20）
         </td>
+    </tr>
+    <tr>
+        <td bgcolor="#f3f3f3">選択後にフォーカスするid名</td>
+        <td><input type="text" name="focs" value="<?php echo $fo; ?>" /></td>
     </tr>
 </table>
 <br />

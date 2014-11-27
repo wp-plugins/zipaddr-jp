@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.8
+Version: 1.9
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERS', '1.8');
+define( 'zipaddr_VERS', '1.9');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -23,17 +23,19 @@ $ta = "";  // 縦
 $yo = "";  // 横
 $pf = "";  // pc-fsize
 $sf = "";  // sp-fsize
+$fo = "";  // focus
 $fname= zipaddr_FILE1;
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) < 6 ) {$prm[]="";}
+	while( count($prm) < 7 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
 	$yo= $prm[3];
 	$pf= $prm[4];
 	$sf= $prm[5];
+	$fo= $prm[6];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 if( $pf < 12  || 20  < $pf ) $pf= "12";
@@ -47,8 +49,8 @@ $pth= $http.'://'.$svr; // 実働環境
 $ul = 'http://zipaddr.com/js/zipaddr7.js';
 $u2 ='http://zipaddr2.com/js/zipaddr3.js';
 $uls= 'https://zipaddr-com.ssl-xserver.jp/js/zipaddr7.js';
-$u2s='https://zipaddr2-com.ssl-xserver.jp/js/zipaddr3.js';
-$ph2='https://zipaddr2-com.ssl-xserver.jp/css/zipaddr.css';
+$u2s='https://zipaddr2-com.ssl-sixcore.jp/js/zipaddr3.js';
+$ph2='https://zipaddr2-com.ssl-sixcore.jp/css/zipaddr.css';
 $u3= $pth.'/js/zipaddr.js';
 	 if( $ac == "3" ) $lpath= $pth.'/js/zipaddr.css';
 else if( $ac == "2" ) {
@@ -71,6 +73,7 @@ if( !empty($ta) ) $js.= 'ZP.top='. $ta.';';
 if( !empty($yo) ) $js.= 'ZP.left='.$yo.';';
 if( !empty($pf) ) $js.= 'ZP.pfon='.$pf.';';
 if( !empty($sf) ) $js.= 'ZP.sfon='.$sf.';';
+if( !empty($fo) ) $js.= "ZP.focus='".$fo."';";
 $js.= 'ZP.min='.$kt.';ZP.uver=\''.$wp_version.'\';}</script>';
 if( $ac=="2" || $ac=="3" ) $js.= '<link rel="stylesheet" href="'.$lpath.'" />';
 $ky = '<form';
