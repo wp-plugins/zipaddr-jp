@@ -14,16 +14,16 @@ It works only in Japanese.
 == Description ==
 
 = In Japanese: =
-���v���O�C����Wordpress�ƏZ���������͂�ZipAddr���O���[�o���A�g��������̂ŁA���{����̂ݓ��삵�܂��B
-��ȓ���菇�͎��̂悤�ɂȂ�܂��B
-1.�N���ݒ��ɗX�֔ԍ��̓��͂�҂��܂��B
-2.Wordpress������X�֔ԍ��f�[�^�̌������N�G�X�g��zipaddr���ɑ���܂��B
-3.zipaddr�ł͗X�֔ԍ�����DB���������ēs���{���A�s�撬���A�n��A�f�[�^��jsonp�`���ŕԂ��܂��B
-4.Wordpress���ɂ̓|�b�v�A�b�v�Ō����̓r���f�[�^���\������܂��B
-5.�ŏI�I��Wordpress����ʂ̓s���{���A�s�撬���A�n��A�̊e���Ƀf�[�^�����ߍ��܂�܂��B
-�ڍא����́A
+当プラグインはWordpressと住所自動入力のZipAddrをグローバル連携させるもので、日本語環境のみ動作します。
+主な動作手順は次のようになります。
+1.起動設定後に郵便番号の入力を待ちます。
+2.Wordpress側から郵便番号データの検索リクエストをzipaddr側に送ります。
+3.zipaddrでは郵便番号からDBを検索して都道府県、市区町村、地域、データをjsonp形式で返します。
+4.Wordpress側にはポップアップで検索の途中データが表示されます。
+5.最終的にWordpress側画面の都道府県、市区町村、地域、の各欄にデータが埋め込まれます。
+詳細説明は、
 [zipaddr-jp(Japanese)](http://zipaddr2.com/wordpress/)
-���Q�Ƃ��ĉ������B
+を参照して下さい。
 
 = In English: =
 Firstly zipaddr has two sites of zipaddr.com and zipaddr2.com in a service provider.
