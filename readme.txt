@@ -3,7 +3,7 @@ Contributors: ta_terunuma
 Donate link: http://zipaddr2.com/wordpress/
 Tags: zipaddr, zip, address, plugin, ajax, cross-domain
 Requires at least: 2.0.2
-Tested up to: 3.5.1
+Tested up to: 4.0
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,19 @@ It works only in Japanese.
 
 == Description ==
 
+= In Japanese: =
+当プラグインはWordpressと住所自動入力のZipAddrをグローバル連携させるもので、日本語環境のみ動作します。
+主な動作手順は次のようになります。
+1.起動設定後に郵便番号の入力を待ちます。
+2.Wordpress側から郵便番号データの検索リクエストをzipaddr側に送ります。
+3.zipaddrでは郵便番号からDBを検索して都道府県、市区町村、地域、データをjsonp形式で返します。
+4.Wordpress側にはポップアップで検索の途中データが表示されます。
+5.最終的にWordpress側画面の都道府県、市区町村、地域、の各欄にデータが埋め込まれます。
+詳細説明は、
+[zipaddr-jp(Japanese)](http://zipaddr2.com/wordpress/)
+を参照して下さい。
+
+= In English: =
 Firstly zipaddr has two sites of zipaddr.com and zipaddr2.com in a service provider.
 In zipaddr.com, free site, the other are pay sites.
 
@@ -41,6 +54,9 @@ It do the following movement.
 1. http://zipaddr2.com/wordpress/popup.png
 
 == Changelog ==
+
+= 1.10 =
+We added the function to set an identifier for system expansion.
 
 = 1.9 =
 We added the focus function after the zip code input.

@@ -21,13 +21,14 @@ function zipaddr_conf() {
 			$pf= isset($_POST['pfon']) ? $_POST['pfon'] : "";
 			$sf= isset($_POST['sfon']) ? $_POST['sfon'] : "";
 			$fo= isset($_POST['focs']) ? $_POST['focs'] : "";
+			$si= isset($_POST['sysid'])? $_POST['sysid']: "";
 			if( $ac < "1" || "3" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "5";
 			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
 			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
 			if( !preg_match("/^[0-9\-]+$/",$sf) ) $sf="";
-			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo;
+			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo.",".trim($si);
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
 		}
@@ -41,10 +42,11 @@ $yo = "";
 $pf = "";
 $sf = "";
 $fo = "";
+$si = "";
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) < 7 ) {$prm[]="";}
+	while( count($prm) <= 7 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
@@ -52,6 +54,7 @@ if( file_exists($fname) ) { // ファイルの確認
 	$pf= $prm[4];
 	$sf= $prm[5];
 	$fo= $prm[6];
+	$si= $prm[7];
 }
 if( $kt < "5" || "7" < $kt ) $kt= "5";
 if( $pf < 12  || 20  < $pf ) $pf= "12";
@@ -94,6 +97,10 @@ SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disab
         <td bgcolor="#f3f3f3">選択後にフォーカスするid名</td>
         <td><input type="text" name="focs" value="<?php echo $fo; ?>" /></td>
     </tr>
+    <tr>
+        <td bgcolor="#f3f3f3">システム拡張用のAP識別子</td>
+        <td><input type="text" name="sysid" value="<?php echo $si; ?>" /></td>
+    </tr>
 </table>
 <br />
 ▼郵便番号DBの稼働場所は、次の3系統があります。<br />
@@ -101,9 +108,11 @@ SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disab
 　有償版サイト： http://zipaddr2.com/ 系<br />
 　御社サイト版： http://zipaddr3.com/ 系<br />
 <br />
-▼有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
-▼御社サイト版のご利用には別途、<a href="https://zipaddr3-com.ssl-xserver.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
-　申請をしないと動きません。<br />
+※有償版は利用申請をしないと動きません。<br />
+▼有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-sixcore.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
+▼御社サイト版のご利用には別途、<a href="https://zipaddr3-com.ssl-sixcore.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
+▼[システム拡張AP識別子]<br />
+　例：WooCommerce<br />
 <div class="btn-area">
 	<ul><li>
 		<input type="hidden" name="token" value="1"/>
