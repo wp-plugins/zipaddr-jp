@@ -3,11 +3,11 @@
 Plugin Name: zipaddr-jp
 Plugin URI: http://zipaddr2.com/wordpress/
 Description: The input convert an address from a zip code automatically.
-Version: 1.10
+Version: 1.11
 Author: Tatsuro, Terunuma
 Author URI: http://pierre-soft.com/
 */
-define( 'zipaddr_VERS', '1.10');
+define( 'zipaddr_VERS', '1.11');
 define( 'zipaddr_PATH', dirname( __FILE__ ) );
 define( 'zipaddr_FILE1',ABSPATH."wp-content/plugins/zipaddr_define.txt" );
 
@@ -15,8 +15,8 @@ if( is_admin() )
 	require_once zipaddr_PATH.'/admin.php';
 
 function zipaddr_jp_change($output, $opt=""){
-     if( strstr($output,'zip') == true ) {;}
-else if( strstr($output,'post')== true ) {;}
+     if( strstr($output,'zip') == true ) {;} // keyword(1)
+else if( strstr($output,'post')== true ) {;} // keyword(2)
 else {return $output;}
 
 $ac = '1'; // 1:ñ≥èû,2:óLèû,3:å‰é–
@@ -73,6 +73,7 @@ else if( $ssl == "1" ) $uls= $uls;
 else                   $uls= $ul;
 $js = '<script type="text/javascript" src="'.$uls.'?v='.zipaddr_VERS.'" charset="UTF-8"></script>';
 $js.= '<script type="text/javascript" charset="UTF-8">function zipaddr_ownb(){';
+$js.= "ZP.wp='1';";
 if( !empty($ta) ) $js.= 'ZP.top='. $ta.';';
 if( !empty($yo) ) $js.= 'ZP.left='.$yo.';';
 if( !empty($pf) ) $js.= 'ZP.pfon='.$pf.';';

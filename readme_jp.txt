@@ -2,8 +2,8 @@
 Contributors: ta_terunuma
 Donate link: http://zipaddr2.com/wordpress/
 Tags: zipaddr, zip, address, plugin, ajax, cross-domain
-Requires at least: 2.0.2
-Tested up to: 3.5.1
+Requires at least: 3.7
+Tested up to: 4.1.1
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -54,6 +54,10 @@ zipaddr-jp‚ğg—p’†‚É‹N‚±‚Á‚½”@‰½‚È‚é‘¹ŠQ‚à©ŒÈÓ”C‚Æ‚È‚è‚Ü‚·B
 
 == Changelog ==
 yXV—š—ğz
+
+= 1.11 =
+[2015/3/16]
+EHELP‚ÌƒŠƒ“ƒNæ‚ğ[À‚³‚¹‚Ü‚µ‚½B
 
 = 1.10 =
 [2015/1/1]
