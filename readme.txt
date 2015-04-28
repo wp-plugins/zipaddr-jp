@@ -3,7 +3,7 @@ Contributors: ta_terunuma
 Donate link: http://zipaddr2.com/wordpress/
 Tags: zipaddr, zip, address, plugin, ajax, cross-domain
 Requires at least: 3.7
-Tested up to: 4.1.1
+Tested up to: 4.2.1
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -52,6 +52,9 @@ It do the following movement.
 1. http://zipaddr2.com/wordpress/popup.png
 
 == Changelog ==
+
+= 1.12 =
+We supported Trust Form and Bug fixed.
 
 = 1.11 =
 We expanded a link of HELP.

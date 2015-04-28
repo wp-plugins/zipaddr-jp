@@ -3,7 +3,7 @@ Contributors: ta_terunuma
 Donate link: http://zipaddr2.com/wordpress/
 Tags: zipaddr, zip, address, plugin, ajax, cross-domain
 Requires at least: 3.7
-Tested up to: 4.1.1
+Tested up to: 4.2.1
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -54,6 +54,10 @@ zipaddr-jpを使用中に起こった如何なる損害も自己責任となります。
 
 == Changelog ==
 【更新履歴】
+
+= 1.12 =
+[2015/4/29]
+・Trust Formの標準サポートとバグ修正をしました。
 
 = 1.11 =
 [2015/3/16]

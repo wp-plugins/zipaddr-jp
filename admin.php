@@ -1,17 +1,14 @@
 <?php
 function zipaddr_plugin_action_links( $links, $file ) {
 	if( $file == plugin_basename(zipaddr_PATH.'/zipaddr-jp.php') ) {
-		$urls= '<a href="'. admin_url('admin.php?page=zipaddr-key-config').'">'.__('Settings').'</a>';
+		$urls= '<a href="'. admin_url('admin.php?page='.zipaddr_KEYS).'">'.__('Settings').'</a>';
 		$array= array( 'Settings' => $urls );
 		$links= array_merge($array, $links);
 	}
 	return $links;
 }
-add_filter( 'plugin_action_links', 'zipaddr_plugin_action_links', 10, 2 );
-
-
 function zipaddr_conf() {
-	if( !empty($_GET['page']) && $_GET['page'] == 'zipaddr-key-config' ) {
+	if( !empty($_GET['page']) && $_GET['page'] == zipaddr_KEYS ) {
 		$fname= zipaddr_FILE1;
 		if( isset($_POST['token']) && !empty($_POST['token']) ) {
 			$ac= isset($_POST['level'])? $_POST['level']: "";
@@ -28,6 +25,7 @@ function zipaddr_conf() {
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
 			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
 			if( !preg_match("/^[0-9\-]+$/",$sf) ) $sf="";
+			$si= htmlspecialchars($si);
 			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo.",".trim($si);
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
@@ -111,8 +109,8 @@ SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disab
 ※有償版は利用申請をしないと動きません。<br />
 ▼有償版のご利用には別途、<a href="https://zipaddr2-com.ssl-sixcore.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
 ▼御社サイト版のご利用には別途、<a href="https://zipaddr3-com.ssl-sixcore.jp/use/" target="_blank">利用申請（有償）</a> が必要となります。<br />
-▼[システム拡張AP識別子]<br />
-　例：WooCommerce<br />
+▼[システム拡張AP識別子（'_'区切り）]<br />
+　例：WooCommerce_TrustForm<br />
 <div class="btn-area">
 	<ul><li>
 		<input type="hidden" name="token" value="1"/>
@@ -136,19 +134,11 @@ function zipaddr_radio($iname,$selected,$table) {
 	return $ans;
 }
 
-function zipaddr_admin_menu() {
-	if ( class_exists( 'Jetpack' ) ) {
-		add_action( 'jetpack_admin_menu', 'zipaddr_load_menu');
-	} else {
-		zipaddr_load_menu();
-	}
+// 設定メニュー下にサブメニューを追加
+function zipaddr_admin_pages(){
+	add_options_page('Zipaddr-JP','Zipaddr-JP', 8,zipaddr_KEYS,'zipaddr_admin_page');
 }
-function zipaddr_load_menu() {	
-	if ( class_exists( 'Jetpack' ) ) {
-		add_submenu_page( 'jetpack', __( 'zipaddr' ), __( 'zipaddr' ), 'manage_options', 'zipaddr-key-config', 'zipaddr_conf' );
-	} else {
-		add_submenu_page('plugins.php', __('zipaddr'), __('zipaddr'), 'manage_options', 'zipaddr-key-config', 'zipaddr_conf');
-	}
+function zipaddr_admin_page(){
+	zipaddr_conf();
 }
-add_action( 'admin_menu', 'zipaddr_admin_menu' );
 ?>
