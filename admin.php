@@ -136,7 +136,7 @@ function zipaddr_radio($iname,$selected,$table) {
 
 // 設定メニュー下にサブメニューを追加
 function zipaddr_admin_pages(){
-	add_options_page('Zipaddr-JP','Zipaddr-JP', 8,zipaddr_KEYS,'zipaddr_admin_page');
+	add_options_page('Zipaddr-JP','Zipaddr-JP', 'activate_plugins',zipaddr_KEYS,'zipaddr_admin_page');
 }
 function zipaddr_admin_page(){
 	zipaddr_conf();
