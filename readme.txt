@@ -53,6 +53,9 @@ It do the following movement.
 
 == Changelog ==
 
+= 1.13 =
+We changed offer for speedup and guidance output seven columns to the standard
+
 = 1.12 =
 We supported Trust Form and Bug fixed.
 

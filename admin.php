@@ -19,8 +19,9 @@ function zipaddr_conf() {
 			$sf= isset($_POST['sfon']) ? $_POST['sfon'] : "";
 			$fo= isset($_POST['focs']) ? $_POST['focs'] : "";
 			$si= isset($_POST['sysid'])? $_POST['sysid']: "";
-			if( $ac < "1" || "3" < $ac ) $ac= "1";
-			if( $kt < "5" || "7" < $kt ) $kt= "5";
+			if( $ac < "1" || "4" < $ac ) $ac= "1";
+			if( $kt < "5" || "7" < $kt ) $kt= "7";
+			if( $ac == "4" ) $kt= "7";
 			if( !preg_match("/^[0-9\-]+$/",$ta) ) $ta="";
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
 			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
@@ -34,7 +35,7 @@ function zipaddr_conf() {
 			$mesg= "【稼働環境の設定】";
 		}
 $ac = '1';
-$kt = '5';
+$kt = '7';
 $ta = "";
 $yo = "";
 $pf = "";
@@ -54,11 +55,11 @@ if( file_exists($fname) ) { // ファイルの確認
 	$fo= $prm[6];
 	$si= $prm[7];
 }
-if( $kt < "5" || "7" < $kt ) $kt= "5";
+if( $kt < "5" || "7" < $kt ) $kt= "7";
 if( $pf < 12  || 20  < $pf ) $pf= "12";
 if( $sf < 12  || 20  < $sf ) $sf= "20";
-$act= array("1" => "商用版サイト（default）","2" => "有償版サイト","3" => "御社サイト内で郵便番号簿管理");
-$ktt= array("5" => "5桁～（default）", "6" => "6桁～", "7" => "7桁～");
+$act= array("1" => "商用版サイト（default）","4" => "　〃　　（スピードアップ版）","2" => "有償版サイト","3" => "御社サイト内で郵便番号簿管理");
+$ktt= array("5" => "5桁～", "6" => "6桁～", "7" => "7桁～（default）");
 $acr= zipaddr_radio("level",$ac, $act);
 $ktr= zipaddr_radio("keta", $kt, $ktt);
 ?>
