@@ -19,6 +19,8 @@ function zipaddr_conf() {
 			$sf= isset($_POST['sfon']) ? $_POST['sfon'] : "";
 			$fo= isset($_POST['focs']) ? $_POST['focs'] : "";
 			$si= isset($_POST['sysid'])? $_POST['sysid']: "";
+			$dl= isset($_POST['deli']) ? $_POST['deli'] : "";
+			$pr= isset($_POST['parm']) ? $_POST['parm'] : "";
 			if( $ac < "1" || "4" < $ac ) $ac= "1";
 			if( $kt < "5" || "7" < $kt ) $kt= "7";
 			if( $ac == "4" ) $kt= "7";
@@ -26,26 +28,32 @@ function zipaddr_conf() {
 			if( !preg_match("/^[0-9\-]+$/",$yo) ) $yo="";
 			if( !preg_match("/^[0-9\-]+$/",$pf) ) $pf="";
 			if( !preg_match("/^[0-9\-]+$/",$sf) ) $sf="";
+			if( $dl=="" || $dl=="-" ) {;}
+			else $dl= "-";
 			$si= htmlspecialchars($si);
-			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo.",".trim($si);
+			$pr= htmlspecialchars($pr);
+			$pr= str_replace(",", "|", $pr);
+			$prm= $ac.",".$kt.",".$ta.",".$yo.",".$pf.",".$sf.",".$fo.",".trim($si).",".$dl.",".$pr;
 			$fpx=fopen($fname,"w"); fwrite($fpx,$prm."\n"); fclose($fpx);
 			$mesg= "稼働環境を設定しました。";
 		}
 		else {
 			$mesg= "【稼働環境の設定】";
 		}
-$ac = '1';
-$kt = '7';
-$ta = "";
-$yo = "";
-$pf = "";
-$sf = "";
-$fo = "";
-$si = "";
+$ac= '1';
+$kt= '7';
+$ta= "";
+$yo= "";
+$pf= "";
+$sf= "";
+$fo= "";
+$si= "";
+$dl= "-";
+$pr= "";
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) <= 7 ) {$prm[]="";}
+	while( count($prm) < 8 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
@@ -54,14 +62,17 @@ if( file_exists($fname) ) { // ファイルの確認
 	$sf= $prm[5];
 	$fo= $prm[6];
 	$si= $prm[7];
+	$dl= isset($prm[8]) ?  $prm[8] : "-";
+	$pr= isset($prm[9]) ?  $prm[9] : "";
 }
 if( $kt < "5" || "7" < $kt ) $kt= "7";
-if( $pf < 12  || 20  < $pf ) $pf= "12";
-if( $sf < 12  || 20  < $sf ) $sf= "20";
+if( $pf < 12  || 20  < $pf ) $pf= "";
+if( $sf < 12  || 20  < $sf ) $sf= "";
 $act= array("1" => "商用版サイト（default）","4" => "　〃　　（スピードアップ版）","2" => "有償版サイト","3" => "御社サイト内で郵便番号簿管理");
 $ktt= array("5" => "5桁～", "6" => "6桁～", "7" => "7桁～（default）");
 $acr= zipaddr_radio("level",$ac, $act);
 $ktr= zipaddr_radio("keta", $kt, $ktt);
+$pr= str_replace("|", ",", $pr);
 ?>
 
 <h2><?php echo $mesg; ?>（zipaddr-jp）</h2>
@@ -77,6 +88,10 @@ $ktr= zipaddr_radio("keta", $kt, $ktt);
     <tr>
         <td bgcolor="#f3f3f3">ガイダンス画面の出力<span style="color: #ff0000;">※</span></td>
         <td><?php echo $ktr; ?></td>
+    </tr>
+    <tr>
+        <td bgcolor="#f3f3f3">郵便番号の区切り文字</td>
+        <td><input type="text" name="deli" size="5" maxlength="1" style="ime-mode:disabled;" value="<?php echo $dl; ?>" />　（default: '-'）</td>
     </tr>
     <tr>
         <td bgcolor="#f3f3f3">ガイダンス位置の補正</td>
@@ -99,6 +114,10 @@ SF：<input type="text" name="sfon" size="5" maxlength="4" style="ime-mode:disab
     <tr>
         <td bgcolor="#f3f3f3">システム拡張用のAP識別子</td>
         <td><input type="text" name="sysid" value="<?php echo $si; ?>" /></td>
+    </tr>
+    <tr>
+        <td bgcolor="#f3f3f3">オウンコード設定パラメータ</td>
+        <td><input type="text" name="parm" value="<?php echo $pr; ?>" /><br />例：bgc=#3366ff,rtrs=</td>
     </tr>
 </table>
 <br />

@@ -4,19 +4,21 @@ function zipaddr_jp_change($output, $opt=""){
 else if( strstr($output,'post')== true ) {;} // keyword(2)
 else {return $output;}
 
-$ac = '1'; // 1:無償,2:有償,3:御社,4:スピードアップ版
-$kt = '7'; // 5-7:ガイダンス表示桁数
-$ta = "";  // 縦
-$yo = "";  // 横
-$pf = "";  // pc-fsize
-$sf = "";  // sp-fsize
-$fo = "";  // focus
-$si = "";  // sysid
+$ac= '1'; // 1:無償,2:有償,3:御社,4:スピードアップ版
+$kt= '7'; // 5-7:ガイダンス表示桁数
+$ta= "";  // 縦
+$yo= "";  // 横
+$pf= "";  // pc-fsize
+$sf= "";  // sp-fsize
+$fo= "";  // focus
+$si= "";  // sysid
+$dl= "-"; // dli
+$pr= "";  // param
 $fname= zipaddr_FILE1;
 if( file_exists($fname) ) { // ファイルの確認
 	$data= trim( file_get_contents($fname) );
 	$prm= explode(",", $data);
-	while( count($prm) <= 7 ) {$prm[]="";}
+	while( count($prm) < 8 ) {$prm[]="";}
 	$ac= $prm[0];
 	$kt= $prm[1];
 	$ta= $prm[2];
@@ -25,10 +27,12 @@ if( file_exists($fname) ) { // ファイルの確認
 	$sf= $prm[5];
 	$fo= $prm[6];
 	$si= $prm[7];
+	$dl= isset($prm[8]) ?  $prm[8] : "-";
+	$pr= isset($prm[9]) ?  $prm[9] : "";
 }
 if( $kt < "5" || "7" < $kt ) $kt= "7";
-if( $pf < 12  || 20  < $pf ) $pf= "12";
-if( $sf < 12  || 20  < $sf ) $sf= "20";
+if( $pf < 12  || 20  < $pf ) $pf= "";
+if( $sf < 12  || 20  < $sf ) $sf= "";
 if( isset($_SERVER['HTTPS']) ) {
 	$http= (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS']=='off' ) ?  'http' : 'https';
 }
@@ -70,8 +74,13 @@ if( $pf!="" ) $js.= $pre.'pfon='.$pf.';';
 if( $sf!="" ) $js.= $pre.'sfon='.$sf.';';
 if( $fo!="" ) $js.=$pre."focus='".$fo."';";
 if( $si!="" ) $js.=$pre."sysid='".$si."';";
-$js.= $pre.'min='.$kt.';'.$pre.'uver=\''.$wp_version.'\';}</script>';
+if( $dl=="" ) $js.= $pre."dli='".$dl."';";
+$js.= $pre.'min='. $kt.';'.$pre.'uver=\''.$wp_version.'\';}</script>';
 if( $ac=="2" || $ac=="3" ) $js.= '<link rel="stylesheet" href="'.$lpath.'" />';
+if( $pr!="" ) {
+	$pr= str_replace("|", ",", $pr);
+	$js.= '<input type="hidden" name="zipaddr_param" id="zipaddr_param" value="'.$pr.'">';
+}
 $ky = '<form';
 	$ans= empty($opt) ? str_ireplace($ky, $js.$ky, $output) : $output.$js;
 	return $ans;
